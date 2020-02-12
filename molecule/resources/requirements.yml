@@ -1,0 +1,4 @@
+---
+- src: git+https://github.com/redbeard28/ansible-role-bootstrap.git
+  version: master
+  name: bootstrap

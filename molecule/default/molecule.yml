@@ -1,0 +1,47 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: molecule/resources/requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+  options:
+    config-file: molecule/default/tests/yaml-int.yml
+platforms:
+  - name: "ansible-role-CIS-level1-${image:-debian}-${tag:-latest}"
+    image: "${namespace:-redbeard28}/${image:-debian}:${tag:-buster-basetools}"
+    pre_build_image: true
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../resources/default.yml
+  lint:
+    name: ansible-lint
+scenario:
+  name: default
+  create_sequence:
+    - destroy
+    - dependency
+    - create
+  converge_sequence:
+#    - destroy
+#    - dependency
+#    - create
+    - converge
+  destroy_sequence:
+    - destroy
+  test_sequence:
+    - create
+    - converge
+    - verify
+    - destroy
+verifier:
+  name: testinfra
+  directory: ../default/tests/
+  lint:
+    name: flake8

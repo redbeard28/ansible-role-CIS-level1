@@ -1,0 +1,11 @@
+---
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - CIS Post actions Cleaning"
+  include_tasks: post.yml
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - CIS prequisits check"
+  include_tasks: prequisits.yml
+  when: ansible_distribution != 'RedHat' or ansible_distribution != 'CentOS'
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - CIS Level 1 Actions"
+  include_tasks: level1.yml
+  tags: section1

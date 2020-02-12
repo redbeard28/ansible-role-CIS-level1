@@ -1,0 +1,15 @@
+---
+# Prequisits checks
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - Operating System"
+  fail:
+    msg: "This benchmark is not suitable for the destination operating system - {{ ansible_distribution }}"
+  when: (ansible_distribution is not defined) or
+        (ansible_distribution_version is not defined)
+  tags: always
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - Check ansible version"
+  fail:
+    msg: You must use ansible 2.8 or greater!
+  when: not ansible_version.full is version_compare('2.8', '>=')
+  tags:
+    - always

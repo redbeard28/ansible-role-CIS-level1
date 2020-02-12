@@ -1,0 +1,29 @@
+---
+# Post tasks
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - POST | Find removed but configured apt packages"
+  shell: "set -o pipefail
+      dpkg --list | grep ^rc | tr -s ' ' | cut -d ' ' -f 2"
+  args:
+    executable: /bin/bash
+  register: apt_rc_packages
+  changed_when: false
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - POST | Perform apt package cleanup"
+  apt:
+    name: "{{ item }}"
+    state: absent
+    purge: true
+  changed_when: false
+  ignore_errors: true
+  with_items: "{{ apt_rc_packages.stdout_lines }}"
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - POST | Ensure we use My office repositories"
+  template:
+    src: cis_authorized.list.j2
+    dest: /etc/apt/sources.list.d/cis_authorized.list
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - POST | Remove source.list file"
+  file:
+    path: /etc/apt/sources.list
+    state: absent

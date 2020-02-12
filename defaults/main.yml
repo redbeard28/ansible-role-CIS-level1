@@ -1,0 +1,5 @@
+---
+my_prefered_repositories:
+  - { name: "Main from MyOffice", definition: "deb http://deb.debian.org/debian/ {{ ansible_distribution_release }} main non-free contrib" }
+  - { name: "Updates from MyOffice", definition: "deb http://deb.debian.org/debian/ {{ ansible_distribution_release }}-updates main contrib non-free" }
+
