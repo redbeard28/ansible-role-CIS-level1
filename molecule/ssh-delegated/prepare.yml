@@ -1,0 +1,12 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  gather_facts: true
+
+  vars_files:
+    - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/.vault"
+
+  roles:
+    - role: redbeard28.bashaliases
+    - role: redbeard28.chefinspec
