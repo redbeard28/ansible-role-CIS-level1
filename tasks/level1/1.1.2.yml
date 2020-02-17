@@ -1,0 +1,34 @@
+---
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - 1.1.2 - SCORED | PATCH | Ensure separate partition exists for /tmp | enable and start/restart tmp.mount"
+  copy:
+    src: "{{ tmp_mount_file[ansible_os_family] }}"
+    dest: /etc/systemd/system/tmp.mount
+    owner: root
+    group: root
+    mode: 0644
+    force: true
+    remote_src: true
+  notify:
+    - systemd restart tmp.mount
+  when:
+    - debian_cis_rules_1_1_2
+  tags:
+    - level1
+    - scored
+    - patch
+    - rule_1.1.2
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - 1.1.2 - SCORED | PATCH | Ensure separate partition exists for /tmp | enable and start/restart tmp.mount"
+  systemd:
+    name: tmp.mount
+    daemon_reload: yes
+    enabled: yes
+    masked: no
+    state: started
+  when:
+    - debian_cis_rules_1_1_2
+  tags:
+    - level1
+    - scored
+    - patch
+    - rule_1.1.2

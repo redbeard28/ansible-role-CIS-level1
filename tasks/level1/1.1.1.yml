@@ -1,0 +1,38 @@
+---
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - 1.1.1 - SCORED | PATCH | Ensure modeprobe folder exist"
+  file:
+    path: /etc/modprobe.d
+    state: directory
+    owner: root
+    group: root
+  when: debian_cis_rules_1_1_1|default(true)
+  tags:
+    - level1
+    - scored
+    - patch
+    - freevxfs
+    - hfs
+    - hfsplus
+    - cramfs
+    - udf
+    - filesystems
+    - rule_1.1.1
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - 1.1.1 - SCORED | PATCH | Ensure desactivate possibility of unwanted filesystems"
+  template:
+    src: blacklist_fs.conf.j2
+    dest: /etc/modprobe.d/blacklist.conf
+    owner: root
+    group: root
+  when: debian_cis_rules_1_1_1|default(true)
+  tags:
+    - level1
+    - scored
+    - patch
+    - freevxfs
+    - hfs
+    - hfsplus
+    - cramfs
+    - udf
+    - filesystems
+    - rule_1.1.1

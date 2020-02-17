@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  gather_facts: true
+
+  vars_files:
+    - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/.vault"
+
+  roles:
+    - role: ansible-role-CIS-level1

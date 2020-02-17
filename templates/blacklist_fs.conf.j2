@@ -1,0 +1,3 @@
+{% for fs in blacklist_fs %}
+install {{ fs.name }} /bin/{{ fs.desactivated }}
+{% endfor %}

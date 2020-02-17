@@ -1,3 +1,8 @@
 ---
 - name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - CIS Level 1 Section 1"
-  include_tasks: level1/1.1.1.1.yml
+  include_tasks: level1/1.1.1.yml
+  tags: section1
+
+- name: "{{ ansible_distribution | lower }} | {{ ansible_distribution_release }} - CIS Level 1 Section 2"
+  include_tasks: level1/1.1.2.yml
+  tags: section1

@@ -1,5 +1,24 @@
 ---
 my_prefered_repositories:
-  - { name: "Main from MyOffice", definition: "deb http://deb.debian.org/debian/ {{ ansible_distribution_release }} main non-free contrib" }
-  - { name: "Updates from MyOffice", definition: "deb http://deb.debian.org/debian/ {{ ansible_distribution_release }}-updates main contrib non-free" }
+  - { name: "Main Updates {{ ansible_distribution_release | lower }}", definition: "deb http://deb.debian.org/debian/ {{ ansible_distribution_release | lower }}-updates main contrib non-free" }
+  - { name: "SRC Main Updates {{ ansible_distribution_release | lower }}", definition: "deb-src http://deb.debian.org/debian/ {{ ansible_distribution_release | lower }}-updates main contrib non-free" }
+  - { name: "Main for {{ ansible_distribution_release | lower }}", definition: "deb http://deb.debian.org/debian/ {{ ansible_distribution_release | lower }} main non-free contrib" }
+  - { name: "SRC Main for {{ ansible_distribution_release | lower }}", definition: "deb-src http://deb.debian.org/debian/ {{ ansible_distribution_release | lower }} main non-free contrib" }
 
+blacklist_fs:
+  - { name: "cramfs", desactivated: "true" }
+  - { name: "freevxfs", desactivated: "true" }
+  - { name: "hfs", desactivated: "true" }
+  - { name: "hfsplus", desactivated: "true" }
+  - { name: "jffs2", desactivated: "true" }
+  - { name: "udf", desactivated: "true" }
+
+debian_cis_rules_1_1_1: true
+debian_cis_rules_1_1_2: true
+
+tmp_mount_file:
+  RedHat: /usr/lib/systemd/system/tmp.mount
+  Debian: /usr/share/systemd/tmp.mount
+tmp_mount_options:
+  RedHat: mode=1777,strictatime,noexec,nodev,nosuid
+  Debian: mode=1777,strictatime,nodev,nosuid

@@ -1,4 +1,4 @@
 ---
-- src: git+https://github.com/redbeard28/ansible-role-bootstrap.git
-  version: master
-  name: bootstrap
+- src: redbeard28.bashaliases
+- src: redbeard28.ruby
+- src: redbeard28.chefinspec
